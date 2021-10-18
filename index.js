@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+const port= process.env.PORT || 7000;
 
 var path = require('path');
 // const cors= require('cors')
@@ -139,6 +140,6 @@ app.delete('/student/:id',(req,res)=>{
 
 app.set('port', process.env.POST || 7000);
 
-var server = app.listen(7000, () => {
+var server = app.listen(port, () => {
   console.log("server running");
 })
