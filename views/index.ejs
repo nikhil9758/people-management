@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+
+<%- include('partials/bootstrap')%>
+
+  <h2>STUDENTS</h2>
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">name</th>
+      <th scope="col">age</th>
+      <th scope="col">city</th>
+      <th scope="col">details</th>
+      <th scope="col">Search By Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for(let c of result){%>  
+    <tr>
+      <th scope="row"><%= c.id %></th>
+      <td><%= c.name%></td>
+      <td><%= c.age %></td>
+      <td><%= c.city %></td>
+      <td><a href="/student/<%=c.id%>">details</a></td>
+      <td> <a href="/student/details/<%=c.name%>">name</a></td>
+    </tr>
+    <%}%>
+  </tbody>
+</table>
+
+
+<a href="/student/new">new student</a><br><br>
+
+<form action="/student?_method=DELETE" method="POST">
+  <button class="btn btn-primary" type="submit">Delete all</button>
+</form> 
+
+</body>
+
+</html>
