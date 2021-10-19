@@ -5,8 +5,7 @@ const methodOverride = require('method-override');
 const port= process.env.PORT || 7000;
 
 var path = require('path');
-// const cors= require('cors')
-// app.use(cors({origin:"*"}))
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 app.use(methodOverride('_method'))
@@ -29,19 +28,19 @@ const result=[
 var mysql = require('mysql');
 // const { nextTick } = require('process');
 
-var con= mysql.createConnection({host:"localhost", user:"root", password:"", database:"student"});
+// var con= mysql.createConnection({host:"localhost", user:"root", password:"", database:"student"});
 
 //app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) 
 
-con.connect(function(err) {
-    if (err){
-      console.log(err);
-      //throw err;
-    } else {
-      console.log('DB connected :)');
-    }
-});
+// con.connect(function(err) {
+//     if (err){
+//       console.log(err);
+//       //throw err;
+//     } else {
+//       console.log('DB connected :)');
+//     }
+// });
 
 //to get the homepage
 app.get('/',(req,res)=>{
@@ -85,18 +84,18 @@ app.get('/people',(req,res)=>{
   }); 
 
   //get the people data on the basis of name
-  app.get('/people/details/:name',(req,res)=>{
+  // app.get('/people/details/:name',(req,res)=>{
     
-    let sql="SELECT * FROM child WHERE name=?";
-    con.query(sql,req.params.name,function(err,result){
-        if (err) {
-            throw err;
-          } else {
-      //    res.send(result);
-       res.render("shownames",{result});
-    }
-    });
-  }); 
+  //   let sql="SELECT * FROM child WHERE name=?";
+  //   con.query(sql,req.params.name,function(err,result){
+  //       if (err) {
+  //           throw err;
+  //         } else {
+  //     //    res.send(result);
+  //      res.render("shownames",{result});
+  //   }
+  //   });
+  // }); 
  
 app.get('/people/:id/edit',(req,res)=>{
    
@@ -148,9 +147,9 @@ app.put('/people/:id',(req,res)=>{
 app.delete('/people/:id',(req,res)=>{
 
   const {id}=req.params;
-  console.log(id);
+  // console.log(id);
   const results= result.find(c=> c.id !== parseInt(id));
-  result.pop(results);
+  // result.pop(results);
  
     // let sql="DELETE FROM child WHERE id=?";
     // con.query(sql,req.params.id,function(err,result){
