@@ -12,16 +12,16 @@ app.use(methodOverride('_method'))
 
 const result=[
   {
-     id: 1,
+     id: '1',
      name: 'nikhil',
      age: 21,
      city:'meerut'
   },
   {
-    id: 2,
-    name: 'nik',
-    age: 25,
-    city:'meerut'
+    id: '2',
+    name: 'aryan',
+    age: 21,
+    city:'noida'
  }
 ]
 
@@ -67,9 +67,8 @@ app.get('/people',(req,res)=>{
  app.get('/people/:id',(req,res)=>{
   
   let {id}=req.params;
- 
-  const results= result.find(c => c.id===parseInt(id));
-
+  
+  const results= result.find((c)=> c.id===id);
    res.render("show",{results});
     // let sql="SELECT * FROM child WHERE id=?";
     // con.query(sql,req.params.id,function(err,result){
@@ -106,8 +105,9 @@ app.post('/people',(req,res)=>{
     const post= req.body;
 
     // let sql ="INSERT INTO child SET ?";
-    
+  
    result.push(post);
+ 
     // con.query(sql,post,function(err,result){
     //     if (err) {
     //         throw err;
@@ -125,7 +125,7 @@ app.put('/people/:id',(req,res)=>{
     const {name, age, city} = req.body;
     const {id}= req.params;
 
-    const results = result.find(c=> c.id === parseInt(id));
+    const results = result.find(c=> c.id === id);
     
     results.name= name;
     results.age= age;
@@ -146,8 +146,8 @@ app.delete('/people/:id',(req,res)=>{
 
   const {id}=req.params;
   // console.log(id);
-  const results= result.find(c=> c.id !== parseInt(id));
-  // result.pop(results);
+  const results= result.find(c=> c.id === id);
+  result.pop(results);
  
     // let sql="DELETE FROM child WHERE id=?";
     // con.query(sql,req.params.id,function(err,result){
