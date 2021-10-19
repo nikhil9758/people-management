@@ -26,9 +26,7 @@ const result=[
 ]
 
 var mysql = require('mysql');
-// const { nextTick } = require('process');
 
-// var con= mysql.createConnection({host:"localhost", user:"root", password:"", database:"student"});
 
 //app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) 
