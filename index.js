@@ -138,7 +138,7 @@ app.delete('/student/:id',(req,res)=>{
     });
   });   
 
-app.set('port', process.env.POST || 7000);
+  app.set('port', process.env.PORT || 7000);
 
 var server = app.listen(port, () => {
   console.log("server running");
