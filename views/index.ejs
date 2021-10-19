@@ -4,7 +4,7 @@
 
 <%- include('partials/bootstrap')%>
 
-  <h2>STUDENTS</h2>
+  <h2>PEOPLE</h2>
 
 
 <table class="table table-striped">
@@ -25,18 +25,18 @@
       <td><%= c.name%></td>
       <td><%= c.age %></td>
       <td><%= c.city %></td>
-      <td><a href="/student/<%=c.id%>">details</a></td>
-      <td> <a href="/student/details/<%=c.name%>">name</a></td>
+      <td><a href="/people/<%=c.id%>">details</a></td>
+      <td> <a href="/people/details/<%=c.name%>">name</a></td>
     </tr>
     <%}%>
   </tbody>
 </table>
 
 
-<a href="/student/new">new student</a><br><br>
+<a href="/people/new">new people</a><br><br>
 
-<form action="/student?_method=DELETE" method="POST">
-  <button class="btn btn-primary" type="submit">Delete all</button>
+<form action="/people?_method=DELETE" method="POST">
+  <!-- <button class="btn btn-primary" type="submit">Delete all</button> -->
 </form> 
 
 </body>

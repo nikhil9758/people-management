@@ -11,6 +11,21 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 app.use(methodOverride('_method'))
 
+const result=[
+  {
+     id: 1,
+     name: 'nikhil',
+     age: 21,
+     city:'meerut'
+  },
+  {
+    id: 2,
+    name: 'nik',
+    age: 25,
+    city:'meerut'
+ }
+]
+
 var mysql = require('mysql');
 // const { nextTick } = require('process');
 
@@ -28,42 +43,49 @@ con.connect(function(err) {
     }
 });
 
+//to get the homepage
 app.get('/',(req,res)=>{
   res.send("This is the home page");
 });
 
-app.get('/student/new',(req,res)=>{
+
+app.get('/people/new',(req,res)=>{
     res.render("home");
   });
 
- //get all student data 
-app.get('/student',(req,res)=>{
-    let sql="SELECT * FROM child";
-    con.query(sql,function(err,result){
-        if (err) {
-            throw err;
-          } else {
+ //get all people data 
+app.get('/people',(req,res)=>{
+    // let sql="SELECT * FROM child";
+    // con.query(sql,function(err,result){
+    //     if (err) {
+    //         throw err;
+    //       } else {
       // res.send(result)
          res.render("index",{result});
-          }
-    });
+        //  }
+   // });
   });  
 
-// get the student data on the basis of id
- app.get('/student/:id',(req,res)=>{
-    let sql="SELECT * FROM child WHERE id=?";
-    con.query(sql,req.params.id,function(err,result){
-        if (err) {
-            throw err;
-          } else {
+// get the people data on the basis of id
+ app.get('/people/:id',(req,res)=>{
+  
+  let {id}=req.params;
+ 
+  const results= result.find(c => c.id===parseInt(id));
+
+   res.render("show",{results});
+    // let sql="SELECT * FROM child WHERE id=?";
+    // con.query(sql,req.params.id,function(err,result){
+    //     if (err) {
+    //         throw err;
+    //       } else {
           // res.send(result);
-        res.render("show",{result});
-    }
-    });
+        
+   // });
   }); 
 
-  //get the student data on the basis of name
-  app.get('/student/details/:name',(req,res)=>{
+  //get the people data on the basis of name
+  app.get('/people/details/:name',(req,res)=>{
     
     let sql="SELECT * FROM child WHERE name=?";
     con.query(sql,req.params.name,function(err,result){
@@ -76,67 +98,83 @@ app.get('/student',(req,res)=>{
     });
   }); 
  
-app.get('/student/:id/edit',(req,res)=>{
+app.get('/people/:id/edit',(req,res)=>{
    
     res.render("edit",{result: req.params});
 });
 
 
-app.post('/student',(req,res)=>{
-    // const post= {id:51,name:'nick', age:24, city:'meerut'};
+app.post('/people',(req,res)=>{
+  
     const post= req.body;
-    // console.log(req.body);
-// res.send({test:4567,ghjj:6889})
-    let sql ="INSERT INTO child SET ?";
-    
 
-    con.query(sql,post,function(err,result){
-        if (err) {
-            throw err;
-          } else {
+    // let sql ="INSERT INTO child SET ?";
+    
+   result.push(post);
+    // con.query(sql,post,function(err,result){
+    //     if (err) {
+    //         throw err;
+    //       } else {
 
 //res.send(result)
-        res.redirect('/student');
-      }
-    });
+        res.redirect('/people');
+   //   }
+  //  });
 //     // res.send("hello");
 });
 
 
-app.put('/student/:id',(req,res)=>{
-    const post= req.body;
-    const reg= req.params.id;
+app.put('/people/:id',(req,res)=>{
+    const {name, age, city} = req.body;
+    const {id}= req.params;
+
+    const results = result.find(c=> c.id === parseInt(id));
     
-   let sql ="UPDATE child SET ? WHERE id=?";
+    results.name= name;
+    results.age= age;
+    results.city = city;
+
+//    let sql ="UPDATE child SET ? WHERE id=?";
     
-   con.query(sql,[post,reg],function(err,result){
-    if (err) {
-        throw err;
-      } else {
-        res.redirect('/student');}
-});
- 
+//    con.query(sql,[post,reg],function(err,result){
+//     if (err) {
+//         throw err;
+//       } else {
+//         res.redirect('/people');}
+// });
+     res.redirect('/people');
 });
 
-app.delete('/student/:id',(req,res)=>{
-    let sql="DELETE FROM child WHERE id=?";
-    con.query(sql,req.params.id,function(err,result){
-        if (err) {
-            throw err;
-          } else {
-            res.redirect('/student');}
-    });
+app.delete('/people/:id',(req,res)=>{
+
+  const {id}=req.params;
+  console.log(id);
+  const results= result.find(c=> c.id !== parseInt(id));
+  result.pop(results);
+ 
+    // let sql="DELETE FROM child WHERE id=?";
+    // con.query(sql,req.params.id,function(err,result){
+    //     if (err) {
+    //         throw err;
+    //       } else {
+            res.redirect('/people');
+    //       }
+    // });
   }); 
  
-  app.delete('/student',(req,res)=>{
-    let sql="DELETE FROM child ";
-    con.query(sql,function(err,result){
-        if (err) {
-            throw err;
-          } else {
-            res.redirect('/student');}
-    });
-  });   
+  // app.delete('/people',(req,res)=>{
+
+  //   result=[];
+
+  //   // let sql="DELETE FROM child ";
+  //   // con.query(sql,function(err,result){
+  //   //     if (err) {
+  //   //         throw err;
+  //   //       } else {
+  //           res.redirect('/people');
+  //   //       }
+  //   // });
+  // });   
 
   app.set('port', process.env.PORT || 7000);
 
