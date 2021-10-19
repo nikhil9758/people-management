@@ -10,7 +10,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 app.use(methodOverride('_method'))
 
-const result=[
+var result=[
   {
      id: '1',
      name: 'nikhil',
@@ -146,8 +146,9 @@ app.delete('/people/:id',(req,res)=>{
 
   const {id}=req.params;
   // console.log(id);
-  const results= result.find(c=> c.id === id);
-  result.pop(results);
+  result= result.filter(c=> c.id !== id);
+  
+  // result.pop(results);
  
     // let sql="DELETE FROM child WHERE id=?";
     // con.query(sql,req.params.id,function(err,result){
