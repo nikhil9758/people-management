@@ -15,7 +15,6 @@
       <th scope="col">age</th>
       <th scope="col">city</th>
       <th scope="col">details</th>
-      <!-- <th scope="col">Search By Name</th> -->
     </tr>
   </thead>
   <tbody>
@@ -26,7 +25,6 @@
       <td><%= c.age %></td>
       <td><%= c.city %></td>
       <td><a href="/people/<%=c.id%>">details</a></td>
-      <!-- <td> <a href="/people/details/<%=c.name%>">name</a></td> -->
     </tr>
     <%}%>
   </tbody>
@@ -36,7 +34,6 @@
 <a href="/people/new">new people</a><br><br>
 
 <form action="/people?_method=DELETE" method="POST">
-  <!-- <button class="btn btn-primary" type="submit">Delete all</button> -->
 </form> 
 
 </body>

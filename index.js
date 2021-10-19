@@ -25,20 +25,8 @@ var result=[
  }
 ]
 
-var mysql = require('mysql');
-
-
-//app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) 
 
-// con.connect(function(err) {
-//     if (err){
-//       console.log(err);
-//       //throw err;
-//     } else {
-//       console.log('DB connected :)');
-//     }
-// });
 
 //to get the homepage
 app.get('/',(req,res)=>{
@@ -52,15 +40,7 @@ app.get('/people/new',(req,res)=>{
 
  //get all people data 
 app.get('/people',(req,res)=>{
-    // let sql="SELECT * FROM child";
-    // con.query(sql,function(err,result){
-    //     if (err) {
-    //         throw err;
-    //       } else {
-      // res.send(result)
          res.render("index",{result});
-        //  }
-   // });
   });  
 
 // get the people data on the basis of id
@@ -70,57 +50,26 @@ app.get('/people',(req,res)=>{
   
   const results= result.find((c)=> c.id===id);
    res.render("show",{results});
-    // let sql="SELECT * FROM child WHERE id=?";
-    // con.query(sql,req.params.id,function(err,result){
-    //     if (err) {
-    //         throw err;
-    //       } else {
-          // res.send(result);
-        
-   // });
+
   }); 
 
-  //get the people data on the basis of name
-  // app.get('/people/details/:name',(req,res)=>{
-    
-  //   let sql="SELECT * FROM child WHERE name=?";
-  //   con.query(sql,req.params.name,function(err,result){
-  //       if (err) {
-  //           throw err;
-  //         } else {
-  //     //    res.send(result);
-  //      res.render("shownames",{result});
-  //   }
-  //   });
-  // }); 
- 
+ //edit the data 
 app.get('/people/:id/edit',(req,res)=>{
    
     res.render("edit",{result: req.params});
 });
 
-
+//push the data
 app.post('/people',(req,res)=>{
   
     const post= req.body;
-
-    // let sql ="INSERT INTO child SET ?";
   
    result.push(post);
  
-    // con.query(sql,post,function(err,result){
-    //     if (err) {
-    //         throw err;
-    //       } else {
-
-//res.send(result)
         res.redirect('/people');
-   //   }
-  //  });
-//     // res.send("hello");
 });
 
-
+//update the data
 app.put('/people/:id',(req,res)=>{
     const {name, age, city} = req.body;
     const {id}= req.params;
@@ -131,51 +80,22 @@ app.put('/people/:id',(req,res)=>{
     results.age= age;
     results.city = city;
 
-//    let sql ="UPDATE child SET ? WHERE id=?";
-    
-//    con.query(sql,[post,reg],function(err,result){
-//     if (err) {
-//         throw err;
-//       } else {
-//         res.redirect('/people');}
-// });
      res.redirect('/people');
 });
 
+//delete the data
 app.delete('/people/:id',(req,res)=>{
 
   const {id}=req.params;
-  // console.log(id);
   result= result.filter(c=> c.id !== id);
-  
-  // result.pop(results);
- 
-    // let sql="DELETE FROM child WHERE id=?";
-    // con.query(sql,req.params.id,function(err,result){
-    //     if (err) {
-    //         throw err;
-    //       } else {
+
             res.redirect('/people');
-    //       }
-    // });
   }); 
- 
-  // app.delete('/people',(req,res)=>{
-
-  //   result=[];
-
-  //   // let sql="DELETE FROM child ";
-  //   // con.query(sql,function(err,result){
-  //   //     if (err) {
-  //   //         throw err;
-  //   //       } else {
-  //           res.redirect('/people');
-  //   //       }
-  //   // });
-  // });   
+    
 
   app.set('port', process.env.PORT || 7000);
 
+  //connecting to server
 var server = app.listen(port, () => {
   console.log("server running");
 })
